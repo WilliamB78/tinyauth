@@ -236,7 +236,7 @@ func (api *API) SetupRoutes() {
 			}
 
 			// Set the user header
-			c.Header("X-Tinyauth-User", userContext.Username)
+			c.Header(api.Config.RemoteUserHeaderName, userContext.Username)
 
 			// The user is allowed to access the app
 			c.JSON(200, gin.H{

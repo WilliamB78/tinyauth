@@ -107,15 +107,16 @@ var rootCmd = &cobra.Command{
 
 		// Create API
 		api := api.NewAPI(types.APIConfig{
-			Port:            config.Port,
-			Address:         config.Address,
-			Secret:          config.Secret,
-			AppURL:          config.AppURL,
-			CookieSecure:    config.CookieSecure,
-			DisableContinue: config.DisableContinue,
-			SessionExpiry:   config.SessionExpiry,
-			Title:           config.Title,
-			GenericName:     config.GenericName,
+			Port:                 config.Port,
+			Address:              config.Address,
+			Secret:               config.Secret,
+			AppURL:               config.AppURL,
+			CookieSecure:         config.CookieSecure,
+			DisableContinue:      config.DisableContinue,
+			SessionExpiry:        config.SessionExpiry,
+			Title:                config.Title,
+			GenericName:          config.GenericName,
+			RemoteUserHeaderName: config.RemoteUserHeaderName,
 		}, hooks, auth, providers)
 
 		// Setup routes
@@ -177,6 +178,7 @@ func init() {
 	rootCmd.Flags().Int("session-expiry", 86400, "Session (cookie) expiration time in seconds.")
 	rootCmd.Flags().Int("log-level", 1, "Log level.")
 	rootCmd.Flags().String("app-title", "Tinyauth", "Title of the app.")
+	rootCmd.Flags().String("remote-user-header-name", "X-Tinyauth-User", "Remote-User header name.")
 
 	// Bind flags to environment
 	viper.BindEnv("port", "PORT")
@@ -209,6 +211,7 @@ func init() {
 	viper.BindEnv("session-expiry", "SESSION_EXPIRY")
 	viper.BindEnv("log-level", "LOG_LEVEL")
 	viper.BindEnv("app-title", "APP_TITLE")
+	viper.BindEnv("remote-user-header-name", "REMOTE_USER_HEADER_NAME")
 
 	// Bind flags to viper
 	viper.BindPFlags(rootCmd.Flags())
